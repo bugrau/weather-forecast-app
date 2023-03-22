@@ -26,8 +26,7 @@ function Box() {
   };
 
   useEffect(() => {
-    const pk = "[mMsgbK8xsiUHVHMlwGW9u15lhJAQtdlB3SB_5GW-d-0]";
-    const url = `https://atlas.microsoft.com/weather/currentConditions/json?api-version=1.1&query=${query}&subscription-key=${pk}`;
+    
 
     axios.get(url)
       .then(response => {
