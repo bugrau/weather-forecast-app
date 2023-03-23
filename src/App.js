@@ -4,7 +4,6 @@ import axios from 'axios';
 function Box() {
   const [weather, setWeather] = useState({});
   const [backgroundColor, setBackgroundColor] = useState('');
-  const [query, setQuery] = useState('51.4,5.6');
 
   const containerStyle = {
     display: 'flex',
@@ -15,8 +14,8 @@ function Box() {
   };
 
   const boxStyle = {
-    width: '600px',
-    height: '350px',
+    width: '200px',
+    height: '200px',
     borderRadius: '5px',
     boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     color: 'white',
@@ -26,9 +25,11 @@ function Box() {
   };
 
   useEffect(() => {
-    
+    const fs = require('fs');
 
-    axios.get(url)
+    const apiKey = fs.readFileSync('C:/Users/bugra/OneDrive/Desktop/my projects/apikey.txt', 'utf8').trim();
+    
+    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=London&appid=${apiKey}`)
       .then(response => {
         setWeather(response.data);
         setBackgroundColor(getBackgroundColor(response.data.weather[0].main));
@@ -36,7 +37,7 @@ function Box() {
       .catch(error => {
         console.log(error);
       });
-  }, [query]);
+  }, []);
 
   function getBackgroundColor(weatherCondition) {
     switch (weatherCondition) {
@@ -61,7 +62,5 @@ function Box() {
     </div>
   );
 }
-
-
 
 export default Box;
