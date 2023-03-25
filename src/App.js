@@ -25,11 +25,7 @@ function Box() {
   };
 
   useEffect(() => {
-    const fs = require('fs');
-
-    const apiKey = fs.readFileSync('C:/Users/bugra/OneDrive/Desktop/my projects/apikey.txt', 'utf8').trim();
-    
-    axios.get(`https://api.openweathermap.org/data/2.5/weather?q=London&appid=${apiKey}`)
+    axios.get('https://api.openweathermap.org/data/2.5/weather?q=London&appid=46e129a4256a320a181a9c9d5ca84ac2')
       .then(response => {
         setWeather(response.data);
         setBackgroundColor(getBackgroundColor(response.data.weather[0].main));
