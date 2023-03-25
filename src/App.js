@@ -3,37 +3,41 @@ import axios from 'axios';
 
 function Box() {
   const [weather, setWeather] = useState({});
-  const [backgroundColor, setBackgroundColor] = useState('');
+  const [backgroundColor, setBackgroundColor] = useState('#FFFFFF'); // Default white color
+  const [city, setCity] = useState('');
 
   const containerStyle = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     height: '100vh',
-    backgroundColor: backgroundColor
+    backgroundColor: '#FFFFFF' // Default white color
   };
 
   const boxStyle = {
-    width: '200px',
-    height: '200px',
+    width: '600px',
+    height: '350px',
     borderRadius: '5px',
     boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.3)',
     color: 'white',
     textAlign: 'center',
     lineHeight: '200px',
-    fontSize: '24px'
+    fontSize: '24px',
+    backgroundColor: backgroundColor // Match the weather condition
   };
 
   useEffect(() => {
-    axios.get('https://api.openweathermap.org/data/2.5/weather?q=London&appid=46e129a4256a320a181a9c9d5ca84ac2')
-      .then(response => {
-        setWeather(response.data);
-        setBackgroundColor(getBackgroundColor(response.data.weather[0].main));
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  }, []);
+    if (city) {
+      axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=46e129a4256a320a181a9c9d5ca84ac2`)
+        .then(response => {
+          setWeather(response.data);
+          setBackgroundColor(getBackgroundColor(response.data.weather[0].main));
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }, [city]);
 
   function getBackgroundColor(weatherCondition) {
     switch (weatherCondition) {
@@ -50,9 +54,17 @@ function Box() {
     }
   }
 
+  function handleCityChange(event) {
+    setCity(event.target.value);
+  }
+
   return (
     <div style={containerStyle}>
-      <div style={{ ...boxStyle, backgroundColor: backgroundColor }}>
+      <div style={boxStyle}>
+        <div>
+          Enter city:
+          <input type="text" value={city} onChange={handleCityChange} />
+        </div>
         {weather.weather ? weather.weather[0].main : 'Loading...'}
       </div>
     </div>
