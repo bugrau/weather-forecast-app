@@ -57,18 +57,18 @@ function Box() {
     if (!weather || !weather[0]) {
       return "";
     }
-    switch (weather[0].main) {
-      case "Clear":
-        return "https://i.imgur.com/7jGZL51.jpg"; // Clear skies image
-      case "Clouds":
-        return "https://i.imgur.com/ZOROuJ7.jpg"; // Cloudy skies image
-      case "Rain":
-        return "https://i.imgur.com/CrRVcEz.jpg"; // Rain image
-      case "Snow":
-        return "https://i.imgur.com/YlN1zX0.jpg"; // Snow image
-      default:
-        return "";
-    }
+  
+    const gifMap = {
+      Clear: "https://media4.giphy.com/media/0Styincf6K2tvfjb5Q/giphy.gif?cid=ecf05e470teggiahh9kkpgwjpwccebsbp04sf1aecatx5pdy&rid=giphy.gif&ct=g", // Clear skies GIF
+      Clouds: "https://media3.giphy.com/media/5HK4TiiBeLSZq/giphy.gif?cid=ecf05e47novsr6s2toa4pvj2ht9vydsye90w71t5ze2p8z44&rid=giphy.gif&ct=g", // Cloudy skies GIF
+      Rain: "https://media3.giphy.com/media/3o6YfWvDokAcsmUfni/giphy.mp4?cid=ecf05e47u0397i5znxwkvmks22fy3smwtaj61l3wjzez93i2&rid=giphy.mp4&ct=g", // Rain GIF
+      Snow: "https://media3.giphy.com/media/Xi2Xu0MejhsUo/giphy.mp4?cid=ecf05e47cnk0aztddtoh1ac9pwp932hhasaqukiafrj3kowr&rid=giphy.mp4&ct=g", // Snow GIF
+      default: "",
+    };
+  
+    const weatherCondition = weather[0].main;
+    const gifUrl = gifMap[weatherCondition] || gifMap.default;
+    return gifUrl;
   }
 
   return (
